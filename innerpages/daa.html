@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Deadlock Avoidance Algorithm</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/daa.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center ">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1><font color="white">Deadlock Avoidance Algorithm</font>></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="../images/daa/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto " href="../ndex.html">Home</a></li>
+          <li><a class="nav-link scrollto " href="../Simulators/Process synchronization/producer_consumer.html" target="_blank">Simulator (Producer) </a></li>        
+          <li><a class="nav-link scrollto " href="../Simulators/Process synchronization/readerWriter.html" target="_blank">Simulator (Reader)</a></li>
+          <li><a class="nav-link scrollto " href="../Simulators/Process synchronization/dining.html" target="_blank">Simulator (Dinnnig)</a></li>
+          <li><a class="nav-link scrollto " href="../Simulators/Process synchronization/sleepingBarber.html" target="_blank">Simulator (Sleeping Barber)</a></li>
+          <li><a class="nav-link scrollto " href="../Simulators/Process synchronization/cigarette_smokers.html" target="_blank">Simulator (Cigarette Smoker)</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+      
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <section class="inner-page">
+      <div class="container">
+        <h1>Semaphores</h1>
+        <p1>
+            A semaphore is a variable of abstract data type used to control access to a common resource. 
+            They are a software based solution to synchronization problem i.e a technique to manage concurrent 
+            processes by using simple integer value .
+            Semaphores are non-negative variables and are shared between threads.
+        </p1>
+        <p>    It is used to solve critical section problem and to achieve process synchronization in multiprocessing environment.
+        When one process modifies the semaphore value no other process can simultaneously modify that value. It is an ‘indivisible operation’.
+        This variable is accessed only through 2 operations wait() and signal().
+    
+        </p1>
+        <h4>Definition of wait()</h4>
+        <p>Let S be the semaphore variable that is shared between processes.<br>
+            P(semaphore S)<br>
+            {<br>
+            While(S<=0)<br>
+            ;       //As long as this condition is true , control is stuck in this loop. The process thus waits<br>
+            S--;	//If S>0, process comes out of loop, S is decremented, enters critical section and users required resource.<br>
+            }
+        </p>
+        <h4>Definiton of Signal()</h4>
+        <p>
+            V(Semaphore S){<br>
+                S++; //Incrementing signifies that a process has released the semaphore<br>
+            }  
+        </p>
+        <h4>Types of Semaphores</h4>
+        <p>Semaphores are of 2 types , Binary Semaphores and Counting Semaphores</p>
+    
+        <h5>1.	Binary semaphore</h5>
+        <p>The value of semaphore is restricted to 0 and 1. The wait operation only works when the semaphore is 1<br> and the signal operation succeeds when semaphore is 0.<br>Also known as mutex locks(mutex for mutual exclusion).</p>
+        <h5>2.	Counting Semaphore</h5>
+        <p>These are integer values that have an unrestricted but limited domain. Used when there are multiple <br>available resources. If the resources are added, semaphore count <br>is automatically incremented and if the resources are removed,<br> the count is decremented.</p>
+        <h4>Advantages of Semaphores </h4>
+        <ol>
+            <li>Semaphores allow only one process into the critical section. They follow the mutual exclusion principle strictly and are much more efficient than some other methods of synchronization.</li>
+            <li>The implementation / code of the semaphores is written in the machine independent code section of the microkernel, and hence semaphores are machine independent.</li>
+        </ol>
+        <h4>Disadvantages of Semaphores</h4>
+        <ol>
+        <li>Requires busy waiting<br>
+            Wastes CPU cycles that other process might be able  to use productively. Also called spinlock because the process spins while waiting for lock.
+            </li>
+            <li>
+                Priority inversion<br>Low priority processes may access the critical section first and high priority processes later
+    
+            </li>
+        </ol>
+    
+        <h1>The Producer-Consumer Problem</h1>
+        <p>Producer-Consumer Problem is also known as bounded buffer problem. There are two processes running, i.e. Producer and Consumer, which are currently operated in the buffer.
+            Both Producer and Consumer share a common memory buffer. This buffer is a space of a certain size in the memory of the system which is used for storage. The producer produces the data into the buffer and the consumer consumes the data from the buffer.
+            </p>
+            <img src="../images/daa/Prod_cons.png" >
+        <h2>Conditions of operation:</h2>
+            <ol>
+                <li>Producer Process should not produce any data when the shared buffer is full.</li> 
+                <li>Consumer Process should not consume any data when the shared buffer is empty. </li> 
+                  <li>The access to the shared buffer should be mutually exclusive i.e at a time only one process should be able to access the shared buffer and make changes to it.</li>
+            </ol>
+            <p>Note: An inadequate solution could result in a deadlock where both processes are waiting to be awakened.<br>For solving the producer-consumer problem, three semaphores are used:</p>
+            <ul>
+                <li>m(mutex) : A binary semaphore which is used to acquire and release the lock.</li>
+                <li>empty(): a counting semaphore whose initial value is the number of slots in the buffer, since initially, all slots are empty.</li>
+                <li>full: a counting semaphore, whose initial value is 0.</li>
+            </ul>
+    <h4>Implementation of producer code</h4>
+    <pre>
+        void Producer(){
+            do{
+                //wait until empty > 0
+                wait(Empty);
+                wait(mutex);
+                add()
+                signal(mutex);
+                signal(Full);
+           }while(TRUE);
+        }
+    </pre>
+    <ul>
+        <li>wait(empty): If the producer has to produce/insert something into the buffer, it needs to first check whether there are empty slots in the buffer. If true, the producer inserts data into the buffer and then decrements one empty slot</li>
+        <li>wait(mutex): It is a binary semaphore, hence acquires the lock. This is shared among the producer and consumer. Hence, if the producer is acquiring the lock, the consumer cannot make any change in the buffer, until the lock is released.</li>
+    `   <li>add(): It adds the data to the buffer</li>
+        <li>signal(mutex): It simply releases the lock acquired by the producer since the addition of data has been done in the buffer.</li>
+        <li>signal(full): This increments the full semaphore since one of the empty slots has now been filled.</li>
+    </ul>
+    <h4>Implementation of consumer code</h4>
+    <pre>
+        void Consumer() {
+            while(true){        // consumer consumes an item
+                wait(Full);
+                wait(mutex);
+                consume();
+                signal(mutex);
+                signal(Empty);
+            }
+        }
+        
+    </pre>
+    <ul>
+        <li>wait(full): If the consumer has to remove data from the buffer, it needs to first check whether the buffer contains some item or not. If true, the consumer removes the data from the buffer and then decrements one full slot.</li>
+        <li>wait(mutex): It is a binary semaphore, hence acquires the lock. This is shared among the producer and consumer. Hence, if the consumer is acquiring the lock, the producer cannot make any change in the buffer, until the lock is released.</li>
+        <li>consumer(): It removes the data from the buffer.</li>
+        <li>signal(mutex): It simply releases the lock acquired by the producer since the addition of data has been done in the buffer.</li>
+        <li>signal(empty): This increments the empty semaphore since one of the empty slots have now been emptied.</li>
+    </ul>
+    
+    <div id="AP_G4GR_5" style="padding-left: 400px;">
+              
+    <!-- code -->
+            <div  style="width:600px;height:500px;line-height:2em;overflow:scroll;padding:50px;background-color:white;color:black;scrollbar-base-color:#DEBB07;border:grey; border-width:1px; border-style:solid;">
+              <div>
+                <div>#include&lt;stdio.h&gt;</div>
+                <div>#include&lt;stdlib.h&gt;</div>
+                <div>#include&lt;pthread.h&gt;</div>
+                <div>#include&lt;semaphore.h&gt;</div>
+                <div>sem_t empty;</div>
+                <div>sem_t full;</div>
+                <div>int in =0;</div>
+                <div>int out = 0;</div>
+                <div> int arr[5];</div>
+                <div>pthread_mutex_t m;;</div>
+                <div>void *producer(void *p){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int item;</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i = 0; i &lt; 5; i++) {</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item = rand(); // Produce an random item</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_wait(&empty);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_lock(&m);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[in] = item;</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Producer %d: Insert Item %d at %d\n", *((int *)p), arr[in],in);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in = (in+1)%5;</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_unlock(&m);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_post(&full);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>}</div>
+                <br>
+                <div>void *consumer(void *c){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i = 0; i &lt; 5; i++) {</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_wait(&full);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_lock(&m);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int item = arr[out];</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Consumer %d: Remove Item %d from %d\n",*((int *)c),item, out);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out = (out+1)%5;</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_unlock(&m);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_post(&empty);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>}</div>
+                <br>
+                <div>int main(){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_t pr[5],co[5];</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_init(&m, NULL);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_init(&empty,0,5);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_init(&full,0,0);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int array[3] = {1,2,3}; </div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i =0; i&lt;3; i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_create(&pr[i], NULL, (void *)producer, (void *)&array[i]);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i =0; i&lt;3; i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_create(&co[i], NULL, (void *)consumer, (void *)&array[i]);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i =0; i&lt;3; i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_join(pr[i], NULL);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i =0; i&lt;3; i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_join(co[i], NULL);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+    
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_destroy(&m);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_destroy(&empty);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_destroy(&full);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0;</div>
+                <div>}</div>
+                </div>
+              </div></div>
+          <br><br>
+           <img class="center" src="../images/daa/3.png" alt="snow"style="width:35%">
+            </br></br>
+    
+        <h1>Readers Writer Problem</h1>
+    <p>The readers-writers problem relates to an object such as a file that is shared between multiple processes.
+        This object needs to be accessed by two types of processes, reader and writer. Any number of readers can read from the shared resource simultaneously, but only one writer can write to the shared resource. When a writer is writing data to the resource, no other process can access the resource. A writer cannot write to the resource if there are non zero number of readers accessing the resource. It is called as reader preference if unlimited number of readers can read simultaneously but only one writer can write at a time(this is the scenario explained below).
+        </p>
+        <h3>Solution
+        </h3>
+    <p> Here, we use one mutex m and a semaphore w. An integer variable read_count is used to maintain the number of readers currently accessing the resource. The variable read_count is initialized to 0. A value of 1 is given initially to m and w.
+        
+    <br>Three variables are used: mutex, wrt, read_count  to implement solution.
+     
+    </p>
+    <ol>
+        <li>Semaphore mutex, wrt; // semaphore mutex is used to ensure mutual exclusion when  read_count  is updated i.e. when any reader enters or exit from the critical section and semaphore wrt is used by both readers and writers
+            </li>
+            <li>int readcnt;  //    read_count  tells the number of processes performing read in the critical section, initially 0
+            </li>
+            <p>There are two functions </p>
+            <li>wait()  decrements value of semaphore
+            <br>signal() performs as ++. which basically increments value of semaphore
+            </li>
+    </ol>
+    <h3>Writer process:
+       </h3>
+    <p> The writer will have to request access for entry in the critical section. It will have to wait until and unless wait() gives a true value. The writer exits the critical section.
+        <br>
+        Code for writers process looks like this:
+        </p>
+        <pre>
+            while(TRUE) {
+                wait(w);
+                /*perform the 
+                write operation */
+                signal(w);
+             }
+             
+        </pre>
+    <h3>Reader process:
+         </h3>
+    <p>The reader requests access to the critical section. When allowed, it will:<br>
+        •	Increase the number of readers.<br>
+        •	Lock the wrt semaphore, so as to stop any editing. <br>
+        •	Then it will signal the mutex that other readers are allowed while existing readers are reading.
+        <br> After completion, it exits the critical section and will signal wrt semaphore to allow writers. 
+        <br>Code for readers process looks like this:
+       </p>
+    <pre>while(TRUE) {
+            wait(m);   //acquire lock
+            read_count++;
+            if(read_count == 1)
+               wait(w);
+            signal(m);  //release lock
+            /* perform the 
+            reading operation */
+            wait(m);   // acquire lock
+            read_count--;
+            if(read_count == 0)
+               signal(w);
+            signal(m);  // release lock
+        } 
+     </pre>
+    
+    
+    <p>C implementation of Readers writers problem</p>
+    
+    <div id="AP_G4GR_5" style="padding-left: 400px;">
+              
+    <!-- code -->
+            <div  style="width:600px;height:500px;line-height:2em;overflow:scroll;padding:50px;background-color:white;color:black;scrollbar-base-color:#DEBB07;border:grey; border-width:1px; border-style:solid;">
+              <div>
+                <div>#include&lt;stdio.h&gt;</div>
+                <div>#include&lt;pthread.h&gt;</div>
+                <div>#include&lt;semaphore.h&gt;</div>
+                <div>sem_t write;</div>
+                <div>int cnt =1;</div>
+                <div>int munr = 0;</div>
+                <div>pthread_mutex_t m;;</div>
+                <div>void *writer(void *w){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_wait(&write);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt = cnt*2;</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Writer %d modified cnt to %d\n",(*((int *)w)),cnt);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_post(&write);</div>
+                <div>}</div>
+                <br>
+                <div>void *reader(void *r){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_lock(&m);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numr++;</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(numr == 1){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_wait(&write); </div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_unlock(&m);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Reader %d read cnt as %d\n",*((int *)r),cnt);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_lock(&m);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numr--;</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(numr == 0) {</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_post(&write);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_unlock(&m);</div>
+                <div>}</div>
+                <br>
+                <div>int main(){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_t r[4],w[2];</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_init(&m, NULL);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_init(&write,0,1);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int arr[4] = {1,2,3,4}; </div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i =0; i&lt;4; i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_create(&r[i], NULL, (void *)reader, (void *)&arr[i]);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i =0; i&lt;2; i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_create(&w[i], NULL, (void *)writer, (void *)&arr[i]);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i =0; i&lt;4; i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_join(r[i], NULL);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i =0; i&lt;2; i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_join(w[i], NULL);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+    
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_mutex_destroy(&m);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_destroy(&write);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0;</div>
+                <div>}</div>
+                </div>
+              </div></div>
+          <br><br>
+    
+              <img class="center" src="../images/daa/4.png" alt="snow"style="width:35%">
+            </br></br>
+    
+    <h1>Dining-philosophers problem</h1>
+    <p>The dining philosophers problem is another classic synchronization problem which is used to evaluate situations where there is a need to allocate multiple resources to multiple processes.</p>
+    
+    <h3>Problem Statement</h3>
+    
+    <p>The dining philosophers problem states that there are 5 philosophers sharing a circular table . At any given time, a philosopher will either think or eat. There is a bowl of rice for each of the philosophers and 5 chopsticks. A philosopher needs both their right and left chopstick to eat. A hungry philosopher may only eat if there are both chopsticks available. Otherwise a philosopher puts down their chopstick and begin thinking again.</p>
+    <img src="../images/daa/dine.png" >
+    <p><br>This problem was structured to tackle the issue of deadlocks which occurs during multiple resource sharing on an operating system.</p>
+    
+    <h3>Solution :</h3>
+    <p>One simple solution is to represent each chopstick with a semaphore. A philosopher tries to grab a chopstick by executing a wait() operation on that semaphore. She releases her chopsticks by executing the signal() operation on the appropriate semaphores. Thus, the shared data are where all the elements of chopstick are initialized to 1. <br>The structure of philosopher i is shown in Figure</p>
+    
+    <pre>semaphore chopstick[5];
+        do { wait(chopstick[i]); 
+        wait(chopstick[(i+1) % 5]); ... 
+        /* eat for awhile */ ... 
+        signal(chopstick[i]); 
+        signal(chopstick[(i+1) % 5]); 
+        .. /* think for awhile */ ...
+         } while (true);
+        </pre>
+    <p>Although this solution guarantees that no two neighbours are eating simultaneously, it nevertheless must be rejected because it could create a deadlock. Suppose that all five philosophers become hungry at the same time and each grabs her left chopstick. All the elements of chopstick will now be equal to 0. When each philosopher tries to grab her right chopstick, she will be delayed forever.
+        <br>A deadlock-free solution does not necessarily eliminate the possibility of starvation.
+        </p>
+    
+    <div id="AP_G4GR_5" style="padding-left: 400px;">
+              
+    <!-- code -->
+            <div  style="width:600px;height:500px;line-height:2em;overflow:scroll;padding:50px;background-color:white;color:black;scrollbar-base-color:#DEBB07;border:grey; border-width:1px; border-style:solid;">
+              <div>
+                <div>#include&lt;stdio.h&gt;</div>
+                <div>#include&lt;stdlib.h&gt;</div>
+                <div>#include&lt;pthread.h&gt;</div>
+                <div>#include&lt;semaphore.h&gt;</div>
+                <div>#include&lt;unistd.h&gt;</div>
+                <div>sem_t cs[5];</div>
+                <div>void * ph(void *);</div>
+                <div>void eat(int);</div>
+                <div>int main(){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i, arr[5];</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_t ar[5];</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i=0;i&lt;5;i++)</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_init(&cs[i],0,1);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i=0;i&lt;5;i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[i] = i;</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_create(&ar[i],NULL,ph,(void *)&arr[i]);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i=0;i&lt;5;i++){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_join(ar[i],NULL);</div>
+                <div>}</div>
+                <div>void * ph(void * n){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int ph=*(int *)n;</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Philosopher %d wants to eat\n",ph);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Philosopher %d tries to pick left chopstick\n",ph);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_wait(&cs[ph]);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Philosopher %d picks the left chopstick\n",ph);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Philosopher %d tries to pick the right chopstick\n",ph);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_wait(&cs[(ph+1)%5]);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Philosopher %d picks the right chopstick\n",ph);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eat(ph);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep(2);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Philosopher %d has finished eating\n",ph);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_post(&cs[(ph+1)%5]);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Philosopher %d leaves the right chopstick\n",ph);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem_post(&cs[ph]);</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Philosopher %d leaves the left chopstick\n",ph);</div>
+                <div>}</div>
+                <br>
+                <div>void eat(int ph){</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Philosopher %d begins to eat\n",ph);</div>
+                <div>}</div>
+                </div>
+              </div></div>
+                <br><br>
+    
+                <div class="row">
+      <div class="column">
+        <img src="../images/daa/5.png" alt="Snow" style="width:100%">
+      </div>
+      <div class="column">
+        <img src="../images/daa/6.png" alt="Forest" style="width:100%">
+      </div>
+      <div class="column">
+        <img src="../images/daa/7.png" alt="Mountains" style="width:100%">
+      </div>
+    </div>
+    
+    
+    
+            
+            </br></br>
+
+      <h1>Sleeping barber problem</h1>
+    <p>The sleeping barber problem is a classic inter-process communication and synchronization problem between multiple operating system processes. The problem is analogous to that of keeping a barber working when there are customers, resting when there are none, and doing so in an orderly manner.</p>
+    
+    <h3>Problem Statement</h3>
+    
+    <p>The analogy is based upon a hypothetical barber shop with one barber. The barber has one barber's chair in a cutting room and a waiting room containing a number of chairs in it.<br>1. If there are no customers, the barber falls asleep in the chair.<br>2. A customer must wake the barber if he is asleep. <br> 3. If a customer arrives while the barber is working, the customer leaves if all chairs are occupied and sits in an empty chair if it's available<br> 4. When the barber finishes a haircut, he inspects the waiting room to see if there are any waiting customers and falls asleep if there are none</p>
+    <p><br>There are two main complications. First, there is a risk that a race condition, where the barber sleeps while a customer waits for the barber to get them for a haircut, arises because all of the actions—checking the waiting room, entering the shop, taking a waiting room chair—take a certain amount of time. Specifically, a customer may arrive to find the barber cutting hair so they return to the waiting room to take a seat but while walking back to the waiting room the barber finishes the haircut and goes to the waiting room, which he finds empty (because the customer walks slowly or went to the restroom) and thus goes to sleep in the barber chair. Second, another problem may occur when two customers arrive at the same time when there is only one empty seat in the waiting room and both try to sit in the single chair; only the first person to get to the chair will be able to sit.</p>
+    <img src="../images/daa/sbp.png" >
+
+
+    
+    <h3>Solution :</h3><br>
+    <p>There are several possible solutions, but all solutions require a mutex, which ensures that only one of the participants can change state at once. The barber must acquire the room status mutex before checking for customers and release it when they begin either to sleep or cut hair; a customer must acquire it before entering the shop and release it once they are sitting in a waiting room or barber chair, and also when they leave the shop because no seats were available. This would take care of both of the problems mentioned above. A number of semaphores is also required to indicate the state of the system. For example, one might store the number of people in the waiting room.<br><br>Implementation:<br>The following pseudocode guarantees synchronization between barber and customer and is deadlock free, but may lead to starvation of a customer. The problem of starvation can be solved with a first-in first-out (FIFO) queue. The semaphore would provide two functions: wait() and signal(), which in terms of C code would correspond to P() and V(), respectively.</p>
+    
+    <pre>Semaphore barberReady = 0
+         Semaphore accessWRSeats = 1    
+         Semaphore custReady = 0        
+         int numberOfFreeWRSeats = N  
+
+         def Barber():
+            while true:                  
+            wait(custReady)             
+            wait(accessWRSeats)        
+            numberOfFreeWRSeats += 1    
+            signal(barberReady)         
+            signal(accessWRSeats)       
+         def Customer():
+            while true:                   
+            wait(accessWRSeats)
+            if numberOfFreeWRSeats > 0: 
+            numberOfFreeWRSeats -= 1  
+            signal(custReady)      
+            signal(accessWRSeats)     
+            wait(barberReady)  
+        else:  
+            signal(accessWRSeats)     
+
+        </pre>
+        <br><br>
+
+
+    <h1>Cigarette smokers problem</h1>
+    <p>Assume a cigarette requires three ingredients to make and smoke: tobacco, paper, and matches. There are three smokers around a table, each of whom has an infinite supply of one of the three ingredients — one smoker has an infinite supply of tobacco, another has paper, and the third has matches.<br>There is also a non-smoking agent who enables the smokers to make their cigarettes by arbitrarily (non-deterministically) selecting two of the supplies to place on the table. The smoker who has the third supply should remove the two items from the table, using them (along with their own supply) to make a cigarette, which they smoke for a while. Once the smoker has finished his cigarette, the agent places two new random items on the table. This process continues forever.</p>
+    
+    <h3>Constraints</h3>
+    
+    <p>To model a resource-management problem of operating systems in real situations, the following constraints are applied to the agent (the agent represents an operating system):<br>The agent is only allowed to communicate by signaling the availability of a resource using a condition variable.<br>The agent is not permitted to disclose resource availability in any other way; i.e., smokers cannot ask the agent what is available. <br> The agent is not permitted to know anything about the resource needs of smokers; i.e., the agent cannot wakeup a smoker directly.<br>Each time the agent makes two resources available, it must wait on a condition variable for a smoker to smoke before it can make any additional resources available.</p>
+    <br>
+    <img src="../images/daa/csp.png" >
+
+
+    
+    <h3>Solution :</h3>
+    <br>
+    <p>Three semaphores are used to represent the items on the table; the agent increases the appropriate semaphore to signal that an item has been placed on the table, and smokers decrement the semaphore when removing items. Also, each smoker has an associated semaphore that they use to signal to the agent that the particular smoker is done smoking; the agent has a process that waits on each smoker's semaphore to let the agent know that it can place the new items on the table.<br><br>Implementation:<br>A simple pseudocode implementation of the smoker who has the supply of tobacco might look like the following:</p>
+    
+    <pre>def tobacco_smoker():
+        repeat:
+          paper.wait()
+          matches.wait()
+          smoke()
+          tobacco_smoker_done.signal()
+        </pre>
+        <p>However, this can lead to deadlock; if the agent places paper and tobacco on the table, the smoker with tobacco may remove the paper and the smoker with matches may take the tobacco, leaving both unable to make their cigarette. The solution is to define additional processes and semaphores that prevent deadlock, without modifying the agent.</p>
+
+
+
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../images/daa/assets/vendor/aos/aos.js"></script>
+  <script src="../images/daa/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../images/daa/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../images/daa/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../images/daa/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../images/daa/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../images/daa/assets/js/main.js"></script>
+
+</body>
+
+</html>
